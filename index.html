@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Popup</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<style>
+			* {
+				font-family: Arial;
+				font-size: 13px;
+			}
+			
+			.bg_shadow {
+				background-color: rgba(0,0,0,0.5);
+				display: none;
+				height: 100%;
+				left: 0;
+				position: fixed;
+				top: 0;
+				width: 100%;
+			}
+			
+			.bg_shadow #popup_1 {
+				background-color: #fff;
+				display: none;
+				height: 250px;
+				left: 50%;
+				margin-left: -140px;
+				margin-top: -125px;
+				position: absolute;
+				top: 50%;
+				width: 280px;
+			}
+			
+			#popup_1 .popup_caption {
+				background-color: #F1F1F1;
+				color: #C0C0C0;
+				font-size: 15px;
+				line-height: 17px;
+				padding: 10px;
+			}
+			
+			#popup_1 .popup_body {
+				padding: 10px;
+			}
+			
+			.bg_shadow #popup_2 {
+				background-color: #fff;
+				min-height: 100px;
+				display: none;
+				left: 35%;
+				position: absolute;
+				top: 30%;
+				width: 30%;
+			}
+			
+			#popup_2 .popup_caption {
+				background-color: #F1F1F1;
+				color: #C0C0C0;
+				overflow: hidden;
+				font-size: 100%;
+				line-height: 100%;
+				padding: 10px;
+			}
+			
+			#popup_2 .popup_body {
+				padding: 10px;
+			}
+			
+			.bg_shadow #popup_3 {
+				background-color: #fff;
+				min-height: 100px;
+				display: none;
+				position: absolute;
+				width: 300px;
+			}
+			
+			#popup_3 .popup_caption {
+				background-color: #F1F1F1;
+				color: #C0C0C0;
+				overflow: hidden;
+				font-size: 100%;
+				line-height: 100%;
+				padding: 10px;
+			}
+			
+			#popup_3 .popup_body {
+				padding: 10px;
+			}
+		</style>
+		<script>
+			function showpopup(selector) {
+				$('.bg_shadow').show();
+				$(selector).show();
+			}
+			function substr_px(str) {
+				return str.substring(0, str.length - 2);
+			}
+			function resize_window(selector) {
+				var screen_height = $(window).height();
+				var screen_width = $(window).width();
+				var win_height = substr_px($(selector).css('height'));
+				var win_width = substr_px($(selector).css('width'));
+				$(selector).animate({top: screen_height/2-(win_height/2), left: screen_width/2-(win_width/2) }, 10);
+			}
+			window.onresize = function(e){
+				resize_window('#popup_3');
+			}
+		</script>
+	</head>
+	<body>
+		<div class="bg_shadow">
+			<div id="popup_1">
+				<div class="popup_caption">Масштабируемое окно</div>
+				<div class="popup_body">
+					У данного окна размеры заведомо прописаны в CSS, если потребуется изменить ширину и высоту, необходимо прописывать эти стили для каждого отдельно взятого окна.<br/><br/>
+					Самый простой, с точки зрения реализации, вариант. Используется когда на сайте немного всплывающих окон фиксированного размера.
+				</div>
+			</div>
+			<div id="popup_2">
+				<div class="popup_caption">Окно с фиксированным размером</div>
+				<div class="popup_body">
+					<img src="image/image.jpeg" width="100%" /><br/>
+					Можно использовать для вывода контента, ширину которого мы можем задать в процентах. Для выравнивания по высоте же потребуется javascript.
+				</div>
+			</div>
+			<div id="popup_3">
+				<div class="popup_caption">Динамическое окно</div>
+				<div class="popup_body">
+					Фиксированная ширина и динамическая высота. <br/><br/> Позволяет строить окна любого необходимого размера. <br/><br/> Из недостатков - легкое подрагивание при масштабировании из-за пересчета высоты и ширины.
+				</div>
+			</div>
+		</div>
+		<button onclick="showpopup('#popup_1')">Ver. 1</button>
+		<button onclick="showpopup('#popup_2')">Ver. 2</button>
+		<button onclick="showpopup('#popup_3'); resize_window('#popup_3');">Ver. 3</button>
+	</body>
+</html> 
